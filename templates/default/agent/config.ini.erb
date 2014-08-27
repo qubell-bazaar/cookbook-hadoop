@@ -1,0 +1,11 @@
+[General]
+server_host=<%= node.cloudera.manager.host %>
+server_port=<%= node.cloudera.manager.port %>
+
+max_collection_wait_seconds=10.0
+metrics_url_timeout_seconds=30.0
+task_metrics_timeout_seconds=5.0
+monitored_nodev_filesystem_types=nfs,nfs4,tmpfs
+
+[Security]
+use_tls=0
