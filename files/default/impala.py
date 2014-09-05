@@ -39,6 +39,11 @@ try:
 except ApiException:
     impala.create_role("impala-statestore1", "STATESTORE", sys.argv[3])
 
+try:
+    impala.get_role("impala-catalogserver1")
+except ApiException:
+    impala.create_role("impala-catalogserver1", "CATALOGSERVER", sys.argv[3])
+
 
 impala_service_config = {
     'hbase_service': 'hbase1',
