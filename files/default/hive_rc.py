@@ -30,7 +30,8 @@ hive_service_config = {
     'hive_metastore_database_user': 'hive',
     'hive_metastore_database_type': 'mysql',
     'hive_metastore_database_port': 3306,
-    'hive_metastore_database_auto_create_schema': True
+    'hive_metastore_database_auto_create_schema': True,
+    'hive_metastore_database_fixed_datastore': False
 }
 hive.update_config(svc_config=hive_service_config)
 
