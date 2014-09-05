@@ -3,7 +3,7 @@ oozie_path = "/var/lib/oozie"
 target_archive =  File.join(oozie_path,"ext-2.2.zip")
 
 remote_file target_archive  do
-  source "http://10.15.240.221/web/ext-2.2.zip"
+  source node[:cloudera][:oozie][:web_console_source]
   owner "oozie"
   group "oozie"
 end
