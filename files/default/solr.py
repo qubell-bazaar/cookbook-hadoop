@@ -5,13 +5,19 @@ from cm_api.api_client import ApiResource
 from cm_api.api_client import ApiException
 
 CMD_TIMEOUT = 180
-api = ApiResource(sys.argv[1], username="admin", password="admin", use_tls=False, version=3)
+api = ApiResource(sys.argv[1], username="admin", password="admin", use_tls=False, version=4)
 cluster = api.get_cluster(sys.argv[2])
 
 try:
     solr = cluster.get_service("solr1")
 except ApiException:
     solr = cluster.create_service("solr1", "SOLR")
+
+
+try:
+    solr.get_role("solr-gateway1")
+except ApiException:
+    solr.create_role("solr-gateway1", "GATEWAY", sys.argv[3])
 
 for i in xrange(3, len(sys.argv)):
     name = "solr-server" + str(i - 2)

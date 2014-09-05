@@ -54,12 +54,6 @@ for role_type in roles_types:
 
 ks_indexer.update_config(svc_config=ks_indexer_service_config)
 
-cmd = ks_indexer_service_config.deploy_client_config(*service_roles_names)
-
-if not cmd.wait(CMD_TIMEOUT).success:
-    raise Exception("Failed to deploy KS_INDEXER client configuration")
-
-
 hbase_restart = hbase.restart()
 mapreduce_restart = cluster.get_service("mapreduce1").restart()
 
