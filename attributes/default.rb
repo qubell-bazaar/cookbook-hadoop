@@ -3,6 +3,12 @@
 #
 include_attribute "java"
 
+default['base']['hosts'] = {
+  '127.0.0.1' => ['localhost', 'localhost.localdomain', 'localhost4', 'localhost4.localdomain4'],
+  '::1'       => ['localhost', 'localhost.localdomain', 'localhost6', 'localhost6.localdomain6']
+}
+default['base']['hosts_aws'] = []
+
 default[:clousera][:repository_url] = "http://archive.cloudera.com"
 default[:cloudera][:hbase][:environment][:java_home] = "/usr/java/jdk6"
 default[:cloudera][:hbase][:environment][:hbase_opts] = "-XX:+UseConcMarkSweepGC"
