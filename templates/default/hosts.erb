@@ -1,0 +1,3 @@
+<% node['base']['hosts'].each do |ip, hosts| -%>
+<%= ip %>   <%= hosts.join(" ") %>
+<% end -%>
