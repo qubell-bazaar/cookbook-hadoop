@@ -9,24 +9,11 @@ case node[:platform]
   when "amazon"
     relnum = "5"
   end
-yum_key "RPM-GPG-KEY-cloudera" do
- url "#{node[:cloudera][:repository_url]}/cm4/redhat/#{relnum}/#{arch}/cm/RPM-GPG-KEY-cloudera"
-end
-
-yum_repository "cloudera-manager" do
-  description "Cloudera's Distribution for Cloudera Manager, Version 4"
-  url "#{node[:cloudera][:repository_url]}/cm4/redhat/#{relnum}/#{arch}/cm/4/"
-  key "RPM-GPG-KEY-cloudera"
-  enabled 1
-end
-
-yum_key "RPM-GPG-KEY-cloudera" do
-  url "#{node[:cloudera][:repository_url]}/cdh4/redhat/#{relnum}/#{arch}/cdh/RPM-GPG-KEY-cloudera"
-end
 
 yum_repository "cloudera-cdh4" do
   description "Cloudera's Distribution for Hadoop, Version 4"
-  url "#{node[:cloudera][:repository_url]}/cdh4/redhat/#{relnum}/#{arch}/cdh/#{node.cloudera.hadoop.version}/"
-  key "RPM-GPG-KEY-cloudera"
-  enabled 1
+  baseurl "#{node[:cloudera][:repository_url]}/cdh4/redhat/#{relnum}/#{arch}/cdh/#{node.cloudera.hadoop.version}/"
+  gpgkey "#{node[:cloudera][:repository_url]}/cdh4/redhat/#{relnum}/#{arch}/cdh/RPM-GPG-KEY-cloudera"
+  enabled true
+  action :create
 end
