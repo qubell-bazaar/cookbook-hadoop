@@ -18,7 +18,12 @@ except ApiException:
 
 hue_service_config={
     'hive_service': 'hive1',
+    'hbase_service': 'hbase1',
+    'hue_hbase_thrift': 'hbasethriftserver1',
     'oozie_service': 'oozie1',
+    'impala_service': 'impala1',
+    'sqoop_service': 'sqoop1',
+    'solr_service': 'solr1',
     'hue_webhdfs': 'hdfs1_NAMENODE_1'
 }
 hue.update_config(svc_config=hue_service_config)

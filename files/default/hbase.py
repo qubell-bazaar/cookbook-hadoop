@@ -74,6 +74,13 @@ for host in gateway_hosts.split(" "):
         hbase.create_role(role_name, "GATEWAY", host)
     hbase_role_names.append(role_name)
 
+try:
+    hbase.get_role("hbasethriftserver1")
+
+except ApiException:
+    hbase.create_role("hbasethriftserver1", "HBASETHRIFTSERVER", master)
+
+hbase_role_names.append("hbasethriftserver1")
 
 cmd = hbase.deploy_client_config(*hbase_role_names)
 
@@ -86,11 +93,3 @@ cmd.wait(CMD_TIMEOUT)
 cmd = hbase.start()
 if not cmd.wait(CMD_TIMEOUT).success:
     raise Exception("Failed to start the Hbase service.")
-
-
-
-
-
-
-
-
