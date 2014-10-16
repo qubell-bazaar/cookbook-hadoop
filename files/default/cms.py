@@ -34,7 +34,7 @@ for line in f:
     creds[service][setting] = value
 
 
-api = ApiResource(sys.argv[1], username="admin", password="admin", use_tls=False, version=3)
+api = ApiResource(sys.argv[1], username="admin", password="admin", use_tls=False, version=4)
 cm = api.get_cloudera_manager()
 
 roles = [ApiRole(api, t.lower(), t, ApiHostRef(api, sys.argv[1])) for t in ROLE_TYPES]

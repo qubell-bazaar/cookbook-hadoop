@@ -13,7 +13,7 @@ cluster_name = sys.argv[4]
 gateway_name = 'hbase-gateway1'
 region_name = 'hbase-region'
 
-api = ApiResource(manager_host, username="admin", password="admin", use_tls=False, version=3)
+api = ApiResource(manager_host, username="admin", password="admin", use_tls=False, version=4)
 cluster = api.get_cluster(cluster_name)
 gateway_hosts = "{0} {1} {2}".format(manager_host, master, region_servers)
 

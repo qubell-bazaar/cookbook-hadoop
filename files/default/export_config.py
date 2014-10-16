@@ -16,7 +16,7 @@ exportKey = sys.argv[5]
 
 # retrieve cluster configuration
 
-api = ApiResource(manager_host, username="admin", password="admin", use_tls=False, version=3)
+api = ApiResource(manager_host, username="admin", password="admin", use_tls=False, version=4)
 
 cluster_config = api.get('cm/deployment')
 

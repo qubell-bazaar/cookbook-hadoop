@@ -25,7 +25,7 @@ cluster_config = k.get_contents_as_string()
 
 # deploy retrieved configuration to cluster
 
-api = ApiResource(manager_host, username="admin", password="admin", use_tls=False, version=3)
+api = ApiResource(manager_host, username="admin", password="admin", use_tls=False, version=4)
 cluster = api.get_cluster(cluster_name)
 
 cmd = cluster.stop()
