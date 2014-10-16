@@ -25,7 +25,12 @@ package "wget"
 package "mysql"
 package "cloudera-manager-daemons"
 package "cloudera-manager-server"
-package "cloudera-manager-server-db"
+case node[:cloudera][:version]
+  when "4"
+    package "cloudera-manager-server-db"
+  when "5"
+    package "cloudera-manager-server-db-2"
+  end
 
 template "/etc/default/cloudera-scm-server" do
   source "defaults.erb"
@@ -36,7 +41,6 @@ template "/etc/default/cloudera-scm-server" do
     }
   })
 end
-
 service "cloudera-scm-server-db" do
   action [ :enable, :start ]
 end

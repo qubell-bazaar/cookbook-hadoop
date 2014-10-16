@@ -1,5 +1,5 @@
 #
-# Install CM4 and CDH4 ephemeral prelink
+# Install CM and CDH ephemeral prelink
 #
 # TODO! It should be splitted by service
 srvs = [

@@ -10,10 +10,10 @@ case node[:platform]
     relnum = "5"
   end
 
-yum_repository "cloudera-cdh4" do
-  description "Cloudera's Distribution for Hadoop, Version 4"
-  baseurl "#{node[:cloudera][:repository_url]}/cdh4/redhat/#{relnum}/#{arch}/cdh/#{node.cloudera.hadoop.version}/"
-  gpgkey "#{node[:cloudera][:repository_url]}/cdh4/redhat/#{relnum}/#{arch}/cdh/RPM-GPG-KEY-cloudera"
+yum_repository "cloudera-cdh#{node[:cloudera][:version]}" do
+  description "Cloudera's Distribution for Hadoop, Version #{node[:cloudera][:version]}"
+  baseurl "#{node[:cloudera][:repository_url]}/cdh#{node[:cloudera][:version]}/redhat/#{relnum}/#{arch}/cdh/#{node.cloudera.hadoop.version}/"
+  gpgkey "#{node[:cloudera][:repository_url]}/cdh#{node[:cloudera][:version]}/redhat/#{relnum}/#{arch}/cdh/RPM-GPG-KEY-cloudera"
   enabled true
   action :create
 end
