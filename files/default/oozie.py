@@ -11,7 +11,7 @@ cluster_name = sys.argv[2]
 jobtracker = sys.argv[3]
 namenode = sys.argv[4]
 
-api = ApiResource(manager_host, username="admin", password="admin", use_tls=False, version=3)
+api = ApiResource(manager_host, username="admin", password="admin", use_tls=False, version=4)
 cluster = api.get_cluster(cluster_name)
 
 try:
@@ -33,7 +33,7 @@ oozie.update_config(svc_config=oozie_service_config)
 oozie_server_config = {
     'oozie_config_safety_valve': '<property>'
                                  '<name>oozie.service.HadoopAccessorService.nameNode.whitelist</name>'
-                                 '<value>{0}</value>'
+                                 '<value>{0}:8020</value>'
                                  '</property>'
                                  '<property>'
                                  '<name>oozie.service.HadoopAccessorService.jobTracker.whitelist</name>'
@@ -105,7 +105,9 @@ while counter < 10:
 else:
     raise Exception("Can't install Oozie ShareLib")
 
-
+cmd = oozie.create_oozie_db()
+if not cmd.wait(CMD_TIMEOUT).success:
+    raise Exception("Failed to create Oozie tables")
 
 # is it needed?
 # cmd = cluster.deploy_client_config()

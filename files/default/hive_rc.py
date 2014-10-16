@@ -31,8 +31,11 @@ hive_service_config = {
     'hive_metastore_database_type': 'mysql',
     'hive_metastore_database_port': 3306,
     'hive_metastore_database_auto_create_schema': True,
-    #'hive_metastore_database_fixed_datastore': False
 }
+
+if cluster.version == "CHD4":
+    hive_service_config['hive_metastore_database_fixed_datastore'] = "False"
+
 hive.update_config(svc_config=hive_service_config)
 
 try:
@@ -62,9 +65,10 @@ cmd = hive.deploy_client_config(*hive_role_names)
 if not cmd.wait(CMD_TIMEOUT).success:
     raise Exception("Failed to deploy client configuration")
 
-cmd = hive.create_hive_metastore_tables()
-if not cmd.wait(CMD_TIMEOUT).success:
-    raise Exception("Failed to create tables")
+if cluster.version == "CHD5":
+    cmd = hive.create_hive_metastore_tables()
+    if not cmd.wait(CMD_TIMEOUT).success:
+        raise Exception("Failed to create tables")
 
 cmd = hive.restart()
 if not cmd.wait(CMD_TIMEOUT).success:

@@ -8,7 +8,7 @@ CMD_TIMEOUT = 180
 manager_host = sys.argv[1]
 cluster_name = sys.argv[2]
 
-api = ApiResource(manager_host, username="admin", password="admin", use_tls=False, version=3)
+api = ApiResource(manager_host, username="admin", password="admin", use_tls=False, version=4)
 cluster = api.get_cluster(cluster_name)
 
 try:
@@ -33,8 +33,9 @@ try:
 except ApiException:
     hue_server = hue.create_role("hue-server1", "HUE_SERVER", manager_host)
 
-try:
-    beeswax_server = hue.get_role("beeswax-server1")
-except ApiException:
-    beeswax_server = hue.create_role("beeswax-server1", "BEESWAX_SERVER", manager_host)
+if cluster.version == "CDH4": 
+  try:
+      beeswax_server = hue.get_role("beeswax-server1")
+  except ApiException:
+      beeswax_server = hue.create_role("beeswax-server1", "BEESWAX_SERVER", manager_host)
 
