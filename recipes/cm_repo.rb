@@ -11,9 +11,9 @@ case node[:platform]
   end
 
 yum_repository "cloudera-manager" do
-  description "Cloudera's Distribution for Cloudera Manager, Version #{node[:cloudera][:version]}"
-  baseurl "#{node[:cloudera][:repository_url]}/cm#{node[:cloudera][:version]}/redhat/#{relnum}/#{arch}/cm/#{node[:cloudera][:version]}/"
-  gpgkey "#{node[:cloudera][:repository_url]}/cm#{node[:cloudera][:version]}/redhat/#{relnum}/#{arch}/cm/RPM-GPG-KEY-cloudera"
+  description "Cloudera's Distribution for Cloudera Manager, Version #{node[:cloudera][:cm_version]}"
+  baseurl "#{node[:cloudera][:repository_url]}/cm#{node[:cloudera][:cm_version]}/redhat/#{relnum}/#{arch}/cm/#{node[:cloudera][:cm_version]}/"
+  gpgkey "#{node[:cloudera][:repository_url]}/cm#{node[:cloudera][:cm_version]}/redhat/#{relnum}/#{arch}/cm/RPM-GPG-KEY-cloudera"
   enabled true
   action :create
 end
