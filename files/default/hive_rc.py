@@ -65,7 +65,7 @@ cmd = hive.deploy_client_config(*hive_role_names)
 if not cmd.wait(CMD_TIMEOUT).success:
     raise Exception("Failed to deploy client configuration")
 
-if cluster.version == "CHD5":
+if cluster.version == "CDH5":
     cmd = hive.create_hive_metastore_tables()
     if not cmd.wait(CMD_TIMEOUT).success:
         raise Exception("Failed to create tables")
