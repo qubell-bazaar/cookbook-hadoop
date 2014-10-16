@@ -1,6 +1,6 @@
 include_recipe "cloudera"
 include_recipe "cloudera::cdh_repo"
-case node[:cloudera][:version]
+case node[:cloudera][:cdh_version]
   when "4"
     include_recipe "cloudera::search_repo"
   when "5"

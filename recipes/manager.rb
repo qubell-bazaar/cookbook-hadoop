@@ -25,7 +25,7 @@ package "wget"
 package "mysql"
 package "cloudera-manager-daemons"
 package "cloudera-manager-server"
-case node[:cloudera][:version]
+case node[:cloudera][:cm_version]
   when "4"
     package "cloudera-manager-server-db"
   when "5"
