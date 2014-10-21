@@ -33,8 +33,8 @@ hive_service_config = {
     'hive_metastore_database_auto_create_schema': True,
 }
 
-if cluster.version == "CHD4":
-    hive_service_config['hive_metastore_database_fixed_datastore'] = "False"
+if cluster.version == "CDH4":
+    hive_service_config['hive_metastore_database_fixed_datastore'] = False
 
 hive.update_config(svc_config=hive_service_config)
 

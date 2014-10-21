@@ -12,8 +12,8 @@ case node[:platform]
 
 yum_repository "cloudera-impala" do
   description "Cloudera Impala repository"
-  baseurl "http://archive.cloudera.com/cdh#{node[:cloudera][:cdh_version]}/redhat/#{relnum}/#{arch}/cdh#{node[:cloudera][:cdh_version]}/#{node.cloudera.impala.version}/"
-  gpgkey "http://archive.cloudera.com/cdh#{node[:cloudera][:cdh_version]}/redhat/#{relnum}/#{arch}/cdh#{node[:cloudera][:cdh_version]}/RPM-GPG-KEY-cloudera"
+  baseurl "http://archive.cloudera.com/impala/redhat/#{relnum}/#{arch}/impala/#{node.cloudera.impala.version}/"
+  gpgkey "http://archive.cloudera.com/impala/redhat/#{relnum}/#{arch}/impala/RPM-GPG-KEY-cloudera"
   enabled true
   action :create
 end

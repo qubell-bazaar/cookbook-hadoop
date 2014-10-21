@@ -1,4 +1,5 @@
 include_recipe "python::pip"
+execute "pip install --upgrade setuptools"
 python_pip "cm_api" do
   version "6.0.2"
   retries 2
