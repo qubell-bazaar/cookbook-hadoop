@@ -14,7 +14,7 @@ metastore_name = 'hive-metastore1'
 gateway_name = 'hive-gateway1'
 hiveserver_2_name = 'hive-server2'
 
-api = ApiResource(manager_host, username="admin", password="admin", use_tls=False, version=3)
+api = ApiResource(manager_host, username="admin", password="admin", use_tls=False, version=4)
 cluster = api.get_cluster(cluster_name)
 gateway_hosts = "{0} {1} {2}".format(manager_host, master, data_nodes)
 
@@ -31,8 +31,11 @@ hive_service_config = {
     'hive_metastore_database_type': 'mysql',
     'hive_metastore_database_port': 3306,
     'hive_metastore_database_auto_create_schema': True,
-    'hive_metastore_database_fixed_datastore': False
 }
+
+if cluster.version == "CDH4":
+    hive_service_config['hive_metastore_database_fixed_datastore'] = False
+
 hive.update_config(svc_config=hive_service_config)
 
 try:
@@ -61,6 +64,11 @@ cmd = hive.deploy_client_config(*hive_role_names)
 
 if not cmd.wait(CMD_TIMEOUT).success:
     raise Exception("Failed to deploy client configuration")
+
+if cluster.version == "CDH5":
+    cmd = hive.create_hive_metastore_tables()
+    if not cmd.wait(CMD_TIMEOUT).success:
+        raise Exception("Failed to create tables")
 
 cmd = hive.restart()
 if not cmd.wait(CMD_TIMEOUT).success:

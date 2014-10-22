@@ -8,7 +8,7 @@ manager_host = sys.argv[1]
 cluster_name = sys.argv[2]
 action = sys.argv[3]
 
-api = ApiResource(manager_host, username="admin", password="admin", use_tls=False, version=3)
+api = ApiResource(manager_host, username="admin", password="admin", use_tls=False, version=4)
 cluster = api.get_cluster(cluster_name)
 
 if action == "format":

@@ -10,4 +10,4 @@ cookbook_file "/usr/local/bin/search.py" do
   mode "0755"
 end
 
-execute "/usr/local/bin/search.py #{node.cloudera.manager.host} Default #{node.cloudera.datanode.hosts.join(" ")}"
+execute "/usr/local/bin/search.py #{node.cloudera.manager.host} Default #{node.cloudera.datanodes.hosts.join(" ")}"

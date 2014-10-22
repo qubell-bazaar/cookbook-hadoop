@@ -4,7 +4,7 @@ import sys
 from cm_api.api_client import ApiResource
 from cm_api.api_client import ApiException
 
-CMD_TIMEOUT = 180
+CMD_TIMEOUT = 300 
 api = ApiResource(sys.argv[1], username="admin", password="admin", use_tls=False, version=4)
 cluster = api.get_cluster(sys.argv[2])
 

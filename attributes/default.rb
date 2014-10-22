@@ -9,6 +9,10 @@ default['base']['hosts'] = {
 }
 default['base']['hosts_aws'] = []
 
+default[:cloudera][:hadoop][:version]="4.4.0"
+default[:cloudera][:cdh_version] = node[:cloudera][:hadoop][:version][0]
+default[:cloudera][:manager][:version]="4.6.3"
+default[:cloudera][:cm_version] = node[:cloudera][:manager][:version][0] 
 default[:clousera][:repository_url] = "http://archive.cloudera.com"
 default[:cloudera][:hbase][:environment][:java_home] = "/usr/java/jdk6"
 default[:cloudera][:hbase][:environment][:hbase_opts] = "-XX:+UseConcMarkSweepGC"
@@ -21,7 +25,7 @@ default[:cloudera][:oozie][:web_console_source] = "http://extjs.com/deploy/ext-2
 
 defaultCluster = {
     :name => "Default",
-    :version => "CDH4",
+    :version => "CDH#{node[:cloudera][:cdh_version]}",
     :services => {
         :zookeeper => {
             :server => {

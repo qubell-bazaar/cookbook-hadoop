@@ -11,7 +11,7 @@ case node[:platform]
   end
 
 yum_repository "cloudera-search" do
-  description "Cloudera Impala repository"
+  description "Cloudera Search repository"
   baseurl "http://archive.cloudera.com/search/redhat/#{relnum}/#{arch}/search/#{node.cloudera.search.version}/"
   gpgkey "http://archive.cloudera.com/search/redhat/#{relnum}/#{arch}/search/RPM-GPG-KEY-cloudera"
   enabled true
