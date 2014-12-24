@@ -3,6 +3,8 @@
 #
 include_attribute "java"
 
+node.set['python']['setuptools_version']="8.2"
+
 default['base']['hosts'] = {
   '127.0.0.1' => ['localhost', 'localhost.localdomain', 'localhost4', 'localhost4.localdomain4'],
   '::1'       => ['localhost', 'localhost.localdomain', 'localhost6', 'localhost6.localdomain6']
