@@ -5,6 +5,7 @@ from cm_api.api_client import ApiResource
 from cm_api.endpoints.types import *
 from cm_api.endpoints.services import ApiServiceSetupInfo
 from cm_api.endpoints.roles import ApiRole
+from cm_api.api_client import ApiException
 
 import socket
 
@@ -38,20 +39,28 @@ api = ApiResource(sys.argv[1], username="admin", password="admin", use_tls=False
 cm = api.get_cloudera_manager()
 
 roles = [ApiRole(api, t.lower(), t, ApiHostRef(api, sys.argv[1])) for t in ROLE_TYPES]
-mgmt = ApiServiceSetupInfo("management", "MGMT", roles=roles)
-service = cm.create_mgmt_service(mgmt)
+try:
+   service = cm.get_service()
+except ApiException:
+   mgmt = ApiServiceSetupInfo("management", "MGMT", roles=roles)
+   service = cm.create_mgmt_service(mgmt)
 
 rcg = service.get_all_role_config_groups()
 for rc in rcg:
-  if rc.roleType in creds and rc.roleType in ROLE_TYPES:
+  if rc.roleType in ROLE_TYPES:
     config = {}
-    for (k,v) in creds[rc.roleType].iteritems():
-      config["firehose_database_" + k] = v
     # Reduce amount of some logs to 1 day
     if rc.roleType == "ACTIVITYMONITOR":
         config["firehose_activity_purge_duration_hours"] = "24"
         config["firehose_attempt_purge_duration_hours"] = "24"
-    config["timeseries_expiration_hours"] = "24"
+        config["timeseries_expiration_hours"] = "24"
+    if rc.roleType == "SERVICEMONITOR":
+        config["firehose_storage_dir"]= "/opt/log/cloudera-service-monitor"
+    if rc.roleType == "HOSTMONITOR":
+        config["firehose_storage_dir"]= "/opt/log/cloudera-host-monitor"
+    if rc.roleType in creds:
+      for (k,v) in creds[rc.roleType].iteritems():
+        config["firehose_database_" + k] = v
     rc.update_config(config)
 
 cmd = service.start()
