@@ -30,6 +30,15 @@ oozie_service_config = {
 
 oozie.update_config(svc_config=oozie_service_config)
 
+oozie_roletype_config = {
+  'OOZIE_SERVER': {
+    'oozie_log_dir': '/opt/log/oozie'
+  }
+}
+for rcg in oozie.get_all_role_config_groups():
+  if rcg.roleType in oozie_roletype_config:
+    rcg.update_config(oozie_roletype_config[rcg.roleType])
+
 oozie_server_config = {
     'oozie_config_safety_valve': '<property>'
                                  '<name>oozie.service.HadoopAccessorService.nameNode.whitelist</name>'

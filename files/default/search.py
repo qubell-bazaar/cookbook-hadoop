@@ -37,22 +37,31 @@ except ApiException:
 for i in xrange(3, len(sys.argv)):
     name = "hbase-indexer" + str(i - 2)
     try:
-        ks_indexer.get_role(name)
+       ks_indexer.get_role(name)
     except ApiException:
-        ks_indexer.create_role(name, "HBASE_INDEXER", sys.argv[i])
+       ks_indexer.create_role(name, "HBASE_INDEXER", sys.argv[i])
 
 ks_indexer_service_config = {
     'hbase_service': 'hbase1',
-    'solr_service': 'solr1'
+    'solr_service': 'solr1',
 }
+ks_indexer.update_config(svc_config=ks_indexer_service_config)
+
+hbase_roletype_config = {
+  'HBASE_INDEXER': {
+    'hbase_indexer_log_dir': '/opt/log/hbase-solr'
+  }
+}
+for rcg in ks_indexer.get_all_role_config_groups():
+  if rcg.roleType in hbase_roletype_config:
+    rcg.update_config(hbase_roletype_config[rcg.roleType])
+
 service_roles_names = []
 roles_types = ks_indexer.get_role_types()
 for role_type in roles_types:
     roles = ks_indexer.get_roles_by_type(role_type)
     for role in roles:
         service_roles_names.append(role.name)
-
-ks_indexer.update_config(svc_config=ks_indexer_service_config)
 
 hbase_restart = hbase.restart()
 mapreduce_restart = cluster.get_service("mapreduce1").restart()
