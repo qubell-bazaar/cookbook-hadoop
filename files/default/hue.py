@@ -33,6 +33,15 @@ try:
 except ApiException:
     hue_server = hue.create_role("hue-server1", "HUE_SERVER", manager_host)
 
+hue_roletype_config = {
+  'HUE_SERVER': {
+    'hue_server_log_dir': '/opt/log/hue'
+  }
+}
+for rcg in hue.get_all_role_config_groups():
+  if rcg.roleType in hue_roletype_config:
+    rcg.update_config(hue_roletype_config[rcg.roleType])
+
 if cluster.version == "CDH4": 
   try:
       beeswax_server = hue.get_role("beeswax-server1")

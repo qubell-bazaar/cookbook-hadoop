@@ -54,6 +54,31 @@ elif action == "start":
                 service_roles_names.append(role.name)
         service.update_config(svc_config=service_config)
 
+        hdfs_roletype_config = {
+          'NAMENODE': {
+            'namenode_log_dir': '/opt/log/hadoop-hdfs'
+          },
+          'DATANODE': {
+            'datanode_log_dir': '/opt/log/hadoop-hdfs'
+          },
+          'SECONDARYNAMENODE': {
+            'secondarynamenode_log_dir': '/opt/log/hadoop-hdfs'
+          }
+        }
+        mr_roletype_config = {
+          'TASKTRACKER':{
+            'tasktracker_log_dir': '/opt/log/hadoop-0.20-mapreduce'
+          },
+          'JOBTRACKER':{
+            'jobtracker_log_dir': '/opt/log/hadoop-0.20-mapreduce'
+          }
+        }
+        for rcg in service.get_all_role_config_groups():
+          if rcg.roleType in hdfs_roletype_config:
+            rcg.update_config(hdfs_roletype_config[rcg.roleType])
+          if rcg.roleType in mr_roletype_config:
+            rcg.update_config(mr_roletype_config[rcg.roleType])
+
         cmd = service.deploy_client_config(*service_roles_names)
         if not cmd.wait(CMD_TIMEOUT).success:
             raise Exception("Failed to deploy client config for %s" % service_name)

@@ -30,14 +30,23 @@ solr_service_config = {
     'hdfs_service': 'hdfs1',
     'zookeeper_service': 'zookeeper1'
 }
+solr.update_config(svc_config=solr_service_config)
+
+solr_roletype_config = {
+  'SOLR_SERVER': {
+    'solr_log_dir': '/opt/log/solr'
+  }
+}
+for rcg in solr.get_all_role_config_groups():
+  if rcg.roleType in solr_roletype_config:
+    rcg.update_config(solr_roletype_config[rcg.roleType])
+
 service_roles_names = []
 roles_types = solr.get_role_types()
 for role_type in roles_types:
     roles = solr.get_roles_by_type(role_type)
     for role in roles:
         service_roles_names.append(role.name)
-
-solr.update_config(svc_config=solr_service_config)
 
 cmd = solr.deploy_client_config(*service_roles_names)
 

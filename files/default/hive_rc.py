@@ -38,6 +38,18 @@ if cluster.version == "CDH4":
 
 hive.update_config(svc_config=hive_service_config)
 
+hive_roletype_config = {
+  'HIVESERVER2': {
+    'hive_log_dir': '/opt/log/hive'
+  },
+  'HIVEMETASTORE': {
+    'hive_log_dir': '/opt/log/hive'
+  }
+}
+for rcg in hive.get_all_role_config_groups():
+  if rcg.roleType in hive_roletype_config:
+    rcg.update_config(hive_roletype_config[rcg.roleType])
+
 try:
     hive.get_role(metastore_name)
 except ApiException:
