@@ -23,7 +23,7 @@ default[:cloudera][:hbase][:properties] = Mash.new
 
 default[:cloudera][:manager][:host] = "127.0.0.1"
 default[:cloudera][:manager][:port] = 7182
-default[:cloudera][:oozie][:web_console_source] = "http://extjs.com/deploy/ext-2.2.zip"
+default[:cloudera][:oozie][:web_console_source] = "https://s3.amazonaws.com/qubell-starter-kit-artifacts/deps/CDH/ext-2.2.zip"
 
 defaultCluster = {
     :name => "Default",
