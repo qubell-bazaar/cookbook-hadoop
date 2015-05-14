@@ -15,6 +15,9 @@ package "cloudera-manager-agent"
 package "cloudera-manager-daemons"
 #package "hue-plugins"
 
+execute "fix cloudera-config" do
+  command "sed -i.bak 's/INCLUDE_CDH_DIR = /INCLUDE_CDH_DIR=/' /usr/lib64/cmf/service/common/cloudera-config.sh"
+end
 template "/etc/default/cloudera-scm-agent" do
   source "defaults.erb"
   variables({
