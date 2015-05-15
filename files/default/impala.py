@@ -53,6 +53,14 @@ impala_service_config = {
 
 impala.update_config(svc_config=impala_service_config)
 
+impala_roletype_config = {
+  'CATALOGSERVER': {
+    'log_dir': '/opt/log/catalogd'
+  }
+}
+for rcg in impala.get_all_role_config_groups():
+  if rcg.roleType in impala_roletype_config:
+    rcg.update_config(impala_roletype_config[rcg.roleType])
 
 for i in xrange(4, len(sys.argv)):
     name = "impalad" + str(i - 3)
